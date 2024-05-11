@@ -1,6 +1,6 @@
 # MBAACC Replay Organizer
 
-A simple script that gives your MBAACC replays more descriptive names.
+A simple script that gives your MBAACC replays more descriptive names. Versions in Python 3 and Perl are available.
 
 Turns this...
 
@@ -46,7 +46,7 @@ DISCLAIMER: THIS SCRIPT WILL MOVE YOUR REPLAY FILES AROUND, AND GIVE THEM NEW NA
 ## Requirements
 
 - Either Perl version 5.10 or later (if using the Perl version), or Python 3.x (if using the Python version).
-- CCCaster v3.1004. I can't guarantee it will work if you use an older version, but let me know if it does.
+- CCCaster v3.1
 
 ## Caveats
 
