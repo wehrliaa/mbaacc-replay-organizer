@@ -26,12 +26,12 @@ ReplayVS/
     │   ├── 2024-05-09-12-25-35,wehrlia,C-S.Akiha,0,Alice,C-Nanaya,2.rep
     │   ├── 2024-05-09-12-25-35,wehrlia,C-S.Akiha,0,Alice,C-Nanaya,2.rep
     │   ├── 2024-07-29-13-27-03,wehrlia,C-S.Akiha,1,Alice,C-Nanaya,2.rep
-	│   └── ...
+    │   └── ...
     ├── Bob/
     │   ├── 2024-02-08-11-06-00,wehrlia,C-S.Akiha,2,Bob,C-Nero,0.rep
     │   ├── 2024-03-08-15-07-56,wehrlia,C-S.Akiha,2,Bob,C-Nero,1.rep
     │   ├── 2024-03-09-17-09-20,wehrlia,C-S.Akiha,2,Bob,C-Nero,1.rep
-	│   └── ...
+    │   └── ...
     ├── Jane/
     │   ├── 2024-04-10-10-41-58,wehrlia,C-S.Akiha,1,Jane,F-Aoko,2.rep
     │   └── 2024-05-01-19-43-33,wehrlia,C-S.Akiha,0,Jane,F-Aoko,2.rep
