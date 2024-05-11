@@ -1,6 +1,6 @@
 # MBAACC Replay Organizer
 
-A simple script that gives your MBAACC replays more descriptive names. Versions in Python 3 and Perl are available.
+A simple script that gives your MBAACC replays more descriptive names.
 
 Turns this...
 
@@ -45,13 +45,13 @@ DISCLAIMER: THIS SCRIPT WILL MOVE YOUR REPLAY FILES AROUND, AND GIVE THEM NEW NA
 
 ## Requirements
 
-- Either Perl version 5.10 or later (if using the Perl version), or Python 3.x (if using the Python version).
+- Any (recent) version of Python 3
 - CCCaster v3.1
 
 ## Caveats
 
 - Will probably not be very useful for replays of local matches, since the nicknames of each player will be "localP2" and "localP1".
-- These scripts have so far only been tested on a Linux system. If something doesn't work and you're on a different OS, either open an issue or contact me via Discord (@wehrlia).
+- This script has so far only been tested on a Linux system. If something doesn't work and you're on a different OS, either open an issue or contact me via Discord (@wehrlia).
 
 ## Installation and usage
 
@@ -59,31 +59,20 @@ The replay files must be located inside the `ReplayVS` folder, and your `results
 
 ### Windows
 
-Copy `organizer.bat` and one of the scripts to your MBAACC installation folder, then run `organizer.bat`.
+Copy `organizer.bat` and `rep-organizer.py` to your MBAACC installation folder, then run `organizer.bat`.
 
-Note that `organizer.bat` hasn't been actually tested (yet), since I don't have access to a Windows system. Again, make a backup before running it, and let me know how it went.
+**Please note** that `organizer.bat` hasn't been actually tested (yet), since I don't have access to a Windows system. Again, make a backup before running it, and let me know how it went.
 
 ### Linux, \*BSD, or MacOS
 
-Copy one of the scripts to your MBAACC installation folder, then run it from your terminal:
-
-```bash
-$ cd path/to/MBAACC/
-$ perl rep-organizer.pl
-```
-
-or
+Copy `rep-organizer.py` to your MBAACC installation folder, then run it from your terminal:
 
 ```bash
 $ cd path/to/MBAACC/
 $ python3 rep-organizer.py
 ```
 
-## Perl or Python?
-
-In a nutshell, both versions do the exact same thing. Pick whichever you prefer.
-
-This script was originally written in Perl, but after considering the fact that Python is a little easier to setup on Windows compared to (Strawberry) Perl, I rewrote it in Python. I personally prefer the Perl version, since that's my preferred language for this kind of stuff.
+You can also `chmod +x` it if you want.
 
 ## Licensing
 
