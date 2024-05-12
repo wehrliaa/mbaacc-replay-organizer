@@ -177,13 +177,13 @@ def main():
 
 		# This is the structure of the new filename.
 		#
-		# $res_date = The date and time the match happened
-		# $s[0]     = Your nickname
-		# $s[1]     = Your character's name and moon
-		# $s[2]     = Your score
-		# $s[3]     = Your opponent's nickname
-		# $s[4]     = Their character's name and moon
-		# $s[5]     = Their score
+		# res_date = The date and time the match happened
+		# s[0]     = Your nickname
+		# s[1]     = Your character's name and moon
+		# s[2]     = Your score
+		# s[3]     = Your opponent's nickname
+		# s[4]     = Their character's name and moon
+		# s[5]     = Their score
 		filename = f"{res_date},{s[0]},{s[1]},{s[2]},{s[3]},{s[4]},{s[5]}.rep"
 
 		# Create a new folder for the person you've played against in the
