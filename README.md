@@ -56,6 +56,7 @@ DISCLAIMER: THIS SCRIPT WILL MOVE YOUR REPLAY FILES AROUND, AND GIVE THEM NEW NA
 
 - Will probably not be very useful for replays of local matches, since the nicknames of each player will be "localP2" and "localP1".
 - This script has so far only been tested on a Linux system. If something doesn't work and you're on a different OS, either open an issue or contact me via Discord (@wehrlia).
+- Won't work for replays of matches you spectated via CCCaster, since those matches aren't registered in the `results.csv` file. It will throw a warning and skip those replays.
 
 # Installation and usage
 
