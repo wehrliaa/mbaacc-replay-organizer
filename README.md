@@ -49,13 +49,12 @@ DISCLAIMER: THIS SCRIPT WILL MOVE YOUR REPLAY FILES AROUND, AND GIVE THEM NEW NA
 
 # Requirements
 
-- Any recent (past 3-4 years, maybe?) version of Python 3
+- Any recent (past 2-3 years, maybe?) version of Python 3
 - CCCaster v3.1
 
 # Caveats
 
 - Will probably not be very useful for replays of local matches, since the nicknames of each player will be "localP2" and "localP1".
-- This script has so far only been tested on a Linux system. If something doesn't work and you're on a different OS, either open an issue or contact me via Discord (@wehrlia).
 - Won't work for replays of matches you spectated via CCCaster, since those matches aren't registered in the `results.csv` file. It will throw a warning and skip those replays.
 
 # Installation and usage
@@ -66,7 +65,11 @@ The replay files must be located inside the `ReplayVS` folder, and your `results
 
 Copy `organizer.bat` and `rep-organizer.py` to your MBAACC installation folder, then run `organizer.bat`.
 
-**Please note** that `organizer.bat` hasn't been actually tested (yet), since I don't have access to a Windows system. Again, make a backup before running it, and let me know how it went.
+You can also run the script from your terminal:
+
+```
+path\to\MBAACC> python rep-organizer.py
+```
 
 ## Linux, \*BSD, or MacOS
 
@@ -74,7 +77,7 @@ Copy `rep-organizer.py` to your MBAACC installation folder, then run it from you
 
 ```bash
 $ cd path/to/MBAACC/
-$ python3 rep-organizer.py
+$ python rep-organizer.py
 ```
 
 You can also `chmod +x` it if you want.
