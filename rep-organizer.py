@@ -173,7 +173,7 @@ def main():
 		# doesn't become too long. Also put a "..." at the end, to indicate
 		# that there are more characters in the nickname.
 		if len(s[0]) > 20: s[0] = s[0][:20] + "..." 
-		if len(s[3]) > 20: s[3] = s[0][:20] + "..."
+		if len(s[3]) > 20: s[3] = s[3][:20] + "..."
 
 		# This is the structure of the new filename.
 		#
