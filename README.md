@@ -82,6 +82,14 @@ $ python rep-organizer.py
 
 You can also `chmod +x` it if you want.
 
+# Guidelines for nicknames
+
+Not following these guidelines might result in all kinds of wacky errors from Python, or bugs inside MBAACC's replay menu.
+
+1. Keep it ASCII, i.e no diacritics, CJK, Arabic, Hebrew, emojis, or any character from a language that isn't english.
+2. Do not include any of the following characters in your nickname:  
+`' " :`
+
 # Licensing
 
 This is public domain software. No warranty, provided "as is", etc. Do whatever you want with it. Giving credit is not mandatory, but appreciated.
