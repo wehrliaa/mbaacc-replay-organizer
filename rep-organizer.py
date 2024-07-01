@@ -99,8 +99,18 @@ def main():
 	# each item in the array is a single line from the file. the `rstrip` is
 	# there to remove trailing newline and carriage return characters from each
 	# line, which will mess some calculations and parsing done later.
+	#
+	# The "encoding='ascii', errors='ignore'" part is included to remove non-
+	# ascii characters, since those cause encoding-related Python errors, and bugs
+	# inside MBAACC's replay selection menu. There *is* a better way to solve
+	# this without deleting characters, by using the unidecode library, but that
+	# would add a third-party dependency, which I'm extremely against for simple
+	# scripts like this. Another way would be writing my own character replacement
+	# function, but that would make the whole script much more complicated to
+	# understand, while also being a TON of (tedious) work for somewhat minimal
+	# gain.
 	try:
-		with open('results.csv') as file:
+		with open('results.csv', encoding='ascii', errors='ignore') as file:
 			results = [line.rstrip("\r\n") for line in file]
 	except FileNotFoundError:
 		print("ERROR: The results.csv file wasn't found. Go play some matches!", file=sys.stderr)
@@ -168,6 +178,14 @@ def main():
 		# Split the line from results.csv into different fields, using commas
 		# as the separators
 		s = line.split(',')
+
+		# If the nickname was only composed of non-ascii characters, which were
+		# removed, change the nickname to "unicode name"
+		#
+		# TODO: check if the nickname now consists only of spaces. not an error that
+		# has come up yet, but *might*...
+		if len(s[0]) == 0: s[0] = "unicode name";
+		if len(s[3]) == 0: s[3] = "unicode name";
 
 		# Truncate nicknames to a maximum of 20 characters, so the filename
 		# doesn't become too long.

@@ -84,11 +84,11 @@ You can also `chmod +x` it if you want.
 
 # Guidelines for nicknames
 
-Not following these guidelines might result in all kinds of wacky errors from Python, or bugs inside MBAACC's replay menu.
-
 1. Keep it ASCII, i.e no diacritics, CJK, Arabic, Hebrew, emojis, or any character from a language that isn't english.
 2. Do not include any of the following characters in your nickname:  
 `' " :`
+
+Non-ASCII characters are be removed from nicknames, since they cause some encoding-related Python errors, while also bugging the replay selection menu in MBAACC (files and folders sometimes go missing if they have non-ASCII characters in their names).
 
 # Licensing
 
