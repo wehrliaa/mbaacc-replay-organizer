@@ -59,11 +59,14 @@ DISCLAIMER: THIS SCRIPT WILL MOVE YOUR REPLAY FILES AROUND, AND GIVE THEM NEW NA
 
 # Installation and usage
 
+1. Play your matches as usual;
+2. After having played them, and having saved some replays, run the script. Instructions on how to install and run it are located below.
+
 The replay files must be located inside the `ReplayVS` folder, and your `results.csv` file must be in the same folder as the script. None of the files should be modified directly in any way. If any of those conditions aren't met, the script will print an error message and exit, without modifying anything.
 
 ## Windows
 
-Copy `organizer.bat` and `rep-organizer.py` to your MBAACC installation folder, then run `organizer.bat`.
+Copy `organizer.bat` and `rep-organizer.py` to your MBAACC installation folder, then run `organizer.bat`:
 
 You can also run the script from your terminal:
 
