@@ -93,7 +93,7 @@ You can also `chmod +x` it if you want.
 
 Problematic characters will be excluded from folder and file names, since they can cause either encoding-related Python errors (in the case of non-ASCII characters), or various sorts of bugs inside MBAACC's replay selection menu.
 
-For example, a nickname like `Bão demais falar: 'pão'` will become `Bo demais falar po`, etc.
+For example, a nickname such as `Bão demais falar: 'pão'` will become `Bo demais falar po` in folder and file names.
 
 # Licensing
 
