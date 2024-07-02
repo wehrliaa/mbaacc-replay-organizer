@@ -91,7 +91,9 @@ You can also `chmod +x` it if you want.
 2. Do not include any of the following characters in your nickname:  
 `' " :`
 
-Non-ASCII characters are be removed from nicknames, since they cause some encoding-related Python errors, while also bugging the replay selection menu in MBAACC (files and folders sometimes go missing if they have non-ASCII characters in their names).
+Problematic characters will be excluded from folder and file names, since they can cause either encoding-related Python errors (in the case of non-ASCII characters), or various sorts of bugs inside MBAACC's replay selection menu.
+
+For example, a nickname like `Bão demais falar: 'pão'` will become `Bo demais falar po`, etc.
 
 # Licensing
 

@@ -192,6 +192,10 @@ def main():
 		if len(s[0]) > 20: s[0] = s[0][:20]
 		if len(s[3]) > 20: s[3] = s[3][:20]
 
+		# Remove problematic characters from nicknames
+		s[0] = s[0].translate(str.maketrans('', '', "'\":"))
+		s[3] = s[3].translate(str.maketrans('', '', "'\":"))
+
 		# This is the structure of the new filename.
 		#
 		# res_date = The date and time the match happened
