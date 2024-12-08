@@ -133,7 +133,7 @@ def main():
 	for i, line in enumerate(results):
 		if not p.match(line):
 			print(f"ERROR: Line number {i} of your results.csv file has been tampered with:", file=sys.stderr)
-			print(f"       {line}.", file=sys.stderr)
+			print(f"       {line}", file=sys.stderr)
 			exitflag = 1
 
 	# Save the list of replay files (files ending in .rep) into a list
