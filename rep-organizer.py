@@ -159,9 +159,9 @@ def main():
 	# weren't already.
 	results = sorted(results, key=lambda f: f.split(',')[6])
 
-	# Create a new folder called "organized" inside the ReplayVS folder. The
+	# Create a new folder called "!organized" inside the ReplayVS folder. The
 	# renamed replay files will be moved into here.
-	os.makedirs("ReplayVS/organized", exist_ok=True)
+	os.makedirs("ReplayVS/!organized", exist_ok=True)
 	for replay in replays:
 		# Get the entry in the results.csv that corresponds to the replay file.
 		# `line` is the entry that corresponds to the file, and `res_epoch` is
@@ -212,11 +212,11 @@ def main():
 		# nickname, well, tough. Either ask them to change it, or manually
 		# rename the folder and files yourself. There's no way to do that
 		# programmatically without making a LOT of assumptions.
-		os.makedirs(f"ReplayVS/organized/{s[3]}", exist_ok=True)
+		os.makedirs(f"ReplayVS/!organized/{s[3]}", exist_ok=True)
 
 		# Move the replay file into the aforementioned folder, with a new and
 		# improved filename.
-		os.rename(f"ReplayVS/{replay}", f"ReplayVS/organized/{s[3]}/{filename}")
+		os.rename(f"ReplayVS/{replay}", f"ReplayVS/!organized/{s[3]}/{filename}")
 	
 	print("done")
 
