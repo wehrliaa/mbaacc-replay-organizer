@@ -96,9 +96,9 @@ def main():
 		exit(1)
 
 	# Save the contents of the results.csv file into an array @results, where
-	# each item in the array is a single line from the file. the `rstrip` is
-	# there to remove trailing newline and carriage return characters from each
-	# line, which will mess some calculations and parsing done later.
+	# each item in the array is a single line from the file. the `translate` is
+	# there to remove newline and carriage return characters from each line,
+	# which will mess some calculations and parsing done later.
 	#
 	# The "encoding='ascii', errors='ignore'" part is included to remove non-
 	# ascii characters, since those cause encoding-related Python errors, and bugs
@@ -109,9 +109,16 @@ def main():
 	# function, but that would make the whole script much more complicated to
 	# understand, while also being a TON of (tedious) work for somewhat minimal
 	# gain.
+	#
+	# The "newline='\n'" part is to ensure that a line is only counted on a LF
+	# (line feed) character, instead of on a CR (carriage return) character.
+	# Don't ask me how, but someone in NA had a CR character in their nickname,
+	# and that broke this script.
 	try:
-		with open('results.csv', encoding='ascii', errors='ignore') as file:
-			results = [line.rstrip("\r\n") for line in file]
+		with open('results.csv', encoding='ascii', errors='ignore', newline='\n') as file:
+			#results = [line.rstrip("\r\n") for line in file]
+			results = [line.translate(str.maketrans('', '', "\r\n")) for line in file]
+			
 	except FileNotFoundError:
 		print("ERROR: The results.csv file wasn't found. Go play some matches!", file=sys.stderr)
 		exit(1)
@@ -178,6 +185,10 @@ def main():
 		# Split the line from results.csv into different fields, using commas
 		# as the separators
 		s = line.split(',')
+
+		# Strip whitespace from nicknames, because filenames can't start nor end with whitespaces on Windows
+		s[0] = s[0].strip()
+		s[3] = s[3].strip()
 
 		# If the nickname was only composed of non-ascii characters, which were
 		# removed, change the nickname to "unicode name"
