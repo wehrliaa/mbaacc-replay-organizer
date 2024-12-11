@@ -84,7 +84,7 @@ def _binsearch(target_file, results):
 			c += 1
 			continue
 
-	print(f"WARNING: Couldn't find entry in results.csv corresponding to file {target_file}. Skipping...", file=sys.stderr)
+	print(f"WARNING: Couldn't find entry in results.csv corresponding to {target_file}. Skipping...", file=sys.stderr)
 	return None, None
 
 def main():
@@ -100,19 +100,12 @@ def main():
 		exit(1)
 
 	# Save the contents of the results.csv file into an array @results, where
-	# each item in the array is a single line from the file. the `translate` is
-	# there to remove newline and carriage return characters from each line,
-	# which will mess some calculations and parsing done later.
+	# each item in the array is a single line from the file, as a list
+	# containing each field. Basically, it's a list of lists.
 	#
 	# The "encoding='ascii', errors='ignore'" part is included to remove non-
 	# ascii characters, since those cause encoding-related Python errors, and bugs
-	# inside MBAACC's replay selection menu. There *is* a better way to solve
-	# this without deleting characters, by using the unidecode library, but that
-	# would add a third-party dependency, which I'm extremely against for simple
-	# scripts like this. Another way would be writing my own character replacement
-	# function, but that would make the whole script much more complicated to
-	# understand, while also being a TON of (tedious) work for somewhat minimal
-	# gain.
+	# inside MBAACC's replay selection menu.
 	try:
 		with open('results.csv', encoding='ascii', errors='ignore', newline='') as f:
 			reader = csv.reader(f)
@@ -146,11 +139,11 @@ def main():
 		exit(1)
 
 	# Save the list of replay files (files ending in .rep) into a list
-	# called replays
+	# called "replays".
 	try:
 		os.chdir("./ReplayVS")
 	except FileNotFoundError:
-		print("ERROR: You don't have a ReplayVS folder.", file=sys.stderr)
+		print("ERROR: Somehow, you don't have a ReplayVS folder. Please create one.", file=sys.stderr)
 		exit(1)
 
 	replays = glob.glob("*.rep")
@@ -219,11 +212,10 @@ def main():
 		# s[5]     = Their score
 		filename = f"{res_date},{s[0]},{s[1]},{s[2]},{s[3]},{s[4]},{s[5]}.rep"
 
-		# Create a new folder for the person you've played against in the
-		# replay. If you've played with two or more people that use the same
-		# nickname, well, tough. Either ask them to change it, or manually
-		# rename the folder and files yourself. There's no way to do that
-		# programmatically without making a LOT of assumptions.
+		# Create a new folder for each person you've played against replay. If
+		# you've played with two or more people that use the same nickname,
+		# well, unfortunate. Either ask them to change it, or edit the
+		# results.csv file, or rename the folders and files yourself.
 		os.makedirs(f"ReplayVS/!organized/{s[3]}", exist_ok=True)
 
 		# Move the replay file into the aforementioned folder, with a new and
