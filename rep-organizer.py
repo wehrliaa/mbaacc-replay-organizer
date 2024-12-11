@@ -8,6 +8,9 @@
 # I have written lots and lots of comments, so people not familiar with Python
 # 3 can still understand what this script does, and why.
 
+from math import log10 # fast way to count the number of digits in a number
+
+import csv  # csv parsing stuff
 import glob # match a list of files with glob matching
 import os   # file manipulation (moving, renaming...) shenanigans
 import re   # regular expression stuff
@@ -67,7 +70,7 @@ def _binsearch(target_file, results):
 	c = 0
 	while lo <= hi:
 		m = int((lo + hi) / 2)
-		test = int(results[m].split(',')[6])
+		test = int(results[m][6])
 
 		if target > test:
 			if target - test < 40:
@@ -86,6 +89,7 @@ def _binsearch(target_file, results):
 
 def main():
 	exitflag = None
+	results = []
 
 	if not os.path.isfile("MBAA.exe"):
 		print("ERROR: This doesn't seem to be your MBAACC installation folder.", file=sys.stderr)
@@ -109,39 +113,37 @@ def main():
 	# function, but that would make the whole script much more complicated to
 	# understand, while also being a TON of (tedious) work for somewhat minimal
 	# gain.
-	#
-	# The "newline='\n'" part is to ensure that a line is only counted on a LF
-	# (line feed) character, instead of on a CR (carriage return) character.
-	# Don't ask me how, but someone in NA had a CR character in their nickname,
-	# and that broke this script.
 	try:
-		with open('results.csv', encoding='ascii', errors='ignore', newline='\n') as file:
-			#results = [line.rstrip("\r\n") for line in file]
-			results = [line.translate(str.maketrans('', '', "\r\n")) for line in file]
+		with open('results.csv', encoding='ascii', errors='ignore', newline='') as f:
+			reader = csv.reader(f)
 			
+			for row in reader:
+				# Check if the results.csv has been tampered with in a way that
+				# makes the calculations and parsing done later impossible to
+				# do. Most notably:
+				#
+				# 1. Each line must have exactly 7 fields (as of CCCaster
+				#    3.1004).
+				# 2. The time recorded, located in the 7th field, must be a
+				#    10-digit number. This might change after January 19, 2038,
+				#    assuming that 1. I'll still be playing this game, and 2.
+				#    CCCaster won't be affected by the Y2K38 bug by then.
+				if len(row) != 7 or int(log10(int(row[6])))+1 != 10:
+					print(f"ERROR: Line number {i} of your results.csv file has been tampered with:", file=sys.stderr)
+					print(f"       {line}", file=sys.stderr)
+					break
+					exitflag = 1
+
+				results.append(row)
+
+			if (reader.line_num) == 0:
+				print(reader.line_num)
+				print("ERROR: Your results.csv file is empty. Go play some matches!", file=sys.stderr)
+				exitflag = 1
+	
 	except FileNotFoundError:
 		print("ERROR: The results.csv file wasn't found. Go play some matches!", file=sys.stderr)
 		exit(1)
-
-	if len(results) == 0:
-		print("ERROR: Your results.csv file is empty. Go play some matches!", file=sys.stderr)
-		exitflag = 1
-	
-	# Check if the results.csv has been tampered with in a way that makes the
-	# calculations and parsing done later impossible to do. Most notably:
-	#
-	# 1. Each line must have exactly 7 fields, separated by commas (as of
-	#    CCCaster version 3.1004).
-	# 2. The time recorded, located in the 7th field, must be a 10-digit
-	#    number. This might change after January 19, 2038, assuming that 1.
-	#    I'll still be playing this game, and 2. CCCaster won't be affected by
-	#    the Y2K38 bug by then.
-	p = re.compile('^.*?,.*?,[0-3],.*?,.*?,[0-3],[0-9]{10}$')
-	for i, line in enumerate(results):
-		if not p.match(line):
-			print(f"ERROR: Line number {i} of your results.csv file has been tampered with:", file=sys.stderr)
-			print(f"       {line}", file=sys.stderr)
-			exitflag = 1
 
 	# Save the list of replay files (files ending in .rep) into a list
 	# called replays
@@ -167,27 +169,23 @@ def main():
 	# Sort the entries in results.csv chronologically (by the value in the 7th
 	# column, which is the time the matches happened), just in case they
 	# weren't already.
-	results = sorted(results, key=lambda f: f.split(',')[6])
+	results = sorted(results, key=lambda f: f[6])
 
 	# Create a new folder called "!organized" inside the ReplayVS folder. The
 	# renamed replay files will be moved into here.
 	os.makedirs("ReplayVS/!organized", exist_ok=True)
 	for replay in replays:
 		# Get the entry in the results.csv that corresponds to the replay file.
-		# `line` is the entry that corresponds to the file, and `res_epoch` is
-		# the time registered in that line, formatted as a UNIX timestamp. If a
+		# `s` is the entry that corresponds to the file, and `res_epoch` is the
+		# time registered in that line, formatted as a UNIX timestamp. If a
 		# corresponding entry couldn't be found, skip to the next replay file
 		# in the list.
-		line, res_epoch = _binsearch(replay, results)
-		if not line:
+		s, res_epoch = _binsearch(replay, results)
+		if not s:
 			continue
 
 		# Convert the UNIX timestamp to a more human-readable format.
 		res_date = time.strftime("%Y-%m-%d-%H-%M-%S", time.localtime(res_epoch))
-
-		# Split the line from results.csv into different fields, using commas
-		# as the separators
-		s = line.split(',')
 
 		# Strip whitespace from nicknames, because filenames can't start nor end with whitespaces on Windows
 		s[0] = s[0].strip()
@@ -207,8 +205,8 @@ def main():
 		if len(s[3]) > 20: s[3] = s[3][:20]
 
 		# Remove problematic characters from nicknames
-		s[0] = s[0].translate(str.maketrans('', '', "'\":"))
-		s[3] = s[3].translate(str.maketrans('', '', "'\":"))
+		s[0] = s[0].translate(str.maketrans('', '', "'\":\r\n"))
+		s[3] = s[3].translate(str.maketrans('', '', "'\":\r\n"))
 
 		# This is the structure of the new filename.
 		#
