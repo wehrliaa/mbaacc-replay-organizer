@@ -161,6 +161,9 @@ def main():
 	if exitflag:
 		exit(1)
 
+	# Count the number of files that were moved
+	movecount = 0
+
 	# Sort the entries in results.csv chronologically (by the value in the 7th
 	# column, which is the time the matches happened), just in case they
 	# weren't already.
@@ -228,8 +231,10 @@ def main():
 		# Move the replay file into the aforementioned folder, with a new and
 		# improved filename.
 		os.rename(f"ReplayVS/{replay}", f"ReplayVS/!organized/{s[3]}/{filename}")
+
+		movecount += 1
 	
-	print("done")
+	print(f"Done. {movecount} replay(s) moved.")
 
 if __name__ == "__main__":
     main()
