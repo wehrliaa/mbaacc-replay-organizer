@@ -23,19 +23,17 @@ import time # time format conversion stuff
 #
 # 1. The only way to consistently pair a replay with an entry in results.csv is
 #    using the timestamps.
-# 2. The time of each match as recorded by CCCaster is never the same as the
-#    one written in the replay filename, even if they are referring to the same
-#    match. In fact, the replay's recorded time is at least 1 second more than
-#    the one in results.csv, and in some rare occasions, the difference between
-#    the two can be anything between 2 and 20 seconds. There is no fixed amount
-#    and, as far as I know, no way to predict how big the difference will be.
+# 2. 99.99999% of the time, the time of each match as recorded by CCCaster is
+#    at least 1 second more than the one in results.csv, and in some cases, the
+#    difference between the two can be anything between 2 and 20 seconds. There
+#    is no fixed amount and, as far as I know, no way to predict how big the
+#    difference will be.
 #
 # Because of that, in order to optimize the process of matching replay files
 # with results.csv entries (in the case of someone having a huge results.csv
 # file, or lots and lots of replay files to organize), a simple binary search
-# algorithm that looks for an exact match, or even storing things in a hash and
-# checking if a certain key is defined wouldn't work, because there will never
-# be an exact, or even consistent match. So here, I'm checking two things:
+# algorithm that looks for an exact match, because there will (almost) never be
+# an exact, or even consistent match. So here, I'm checking two things:
 #
 # 1. Is the target value (date in the replay file) larger than the current
 #    value being tested (entry in results.csv)?
@@ -47,9 +45,12 @@ import time # time format conversion stuff
 # ass later, although the chances are REALLY small. The biggest gap between
 # both values I've seen personally was 22. I could maybe pick a value as high
 # as 50, but then I'd be assuming that people wouldn't be having 50 second long
-# matches, which, in my opinion, is more likely to happen than the actual gap
-# between the two values to be 50. There's no easy way around this, i.e.
-# without having to make an educated guess.
+# matches, which in my opinion, is more likely to happen than the actual gap
+# between the two values to be 50.
+#
+# Like I mentioned above, there are some extremely, EXTREMELY rare cases
+# (1 in ~3900 matches) of an exact match happening, so I put a `return` clause
+# at the end of the while loop, in case that happens.
 def _binsearch(target_file, results):
 	target = None
 
@@ -83,6 +84,8 @@ def _binsearch(target_file, results):
 			hi = m - 1
 			c += 1
 			continue
+
+		return results[m], test
 
 	print(f"WARNING: Couldn't find entry in results.csv corresponding to {target_file}. Skipping...", file=sys.stderr)
 	return None, None
