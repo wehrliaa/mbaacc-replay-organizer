@@ -112,7 +112,6 @@ def main():
 	# and that broke this script.
 	try:
 		with open('results.csv', encoding='ascii', errors='ignore', newline='\n') as file:
-			#results = [line.rstrip("\r\n") for line in file]
 			results = [line.translate(str.maketrans('', '', "\r\n")) for line in file]
 			
 	except FileNotFoundError:
@@ -203,8 +202,8 @@ def main():
 		if len(s[3]) > 20: s[3] = s[3][:20]
 
 		# Remove problematic characters from nicknames
-		s[0] = s[0].translate(str.maketrans('', '', "'\":"))
-		s[3] = s[3].translate(str.maketrans('', '', "'\":"))
+		s[0] = s[0].translate(str.maketrans('', '', "'\":\r\n*<>?|"))
+		s[3] = s[3].translate(str.maketrans('', '', "'\":\r\n*<>?|"))
 
 		# This is the structure of the new filename.
 		#
